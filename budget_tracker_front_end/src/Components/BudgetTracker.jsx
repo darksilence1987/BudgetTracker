@@ -48,6 +48,7 @@ export default function BudgetTracker() {
 
 
     const handleAddClick = () => {
+        setEditingExpense(null);
         setShowForm(true); // Show the form when the PlusCircle is clicked
     };
     const handleCancel = () => {
@@ -125,7 +126,7 @@ export default function BudgetTracker() {
 
     return (
         <div className="budget-tracker">
-            <TopBar onAddClick={() => setEditingExpense(null)} />
+            <TopBar onAddClick={() => handleAddClick()} />
             <div className="chart">
                 <DoughnutChart data={chartData} />
             </div>
