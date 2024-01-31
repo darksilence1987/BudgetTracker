@@ -13,6 +13,9 @@
     color: black;
     font-size: small;
     border: 3px solid #888c94;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%; /* Adjust as needed */
 }
 .left-box{
     flex-grow: 8;
@@ -30,4 +33,25 @@
 }
 .expense-category{
     text-align: left;
+}
+/* Expense.css */
+.outer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.expense.shrunk {
+    width: 50%; /* Adjust as needed */
+}
+
+.expense-buttons {
+    display: flex;
+    gap: 10px;
+    /* Display the buttons when the expense is shrunk */
+}
+
+.expense-buttons button {
+    cursor: pointer;
+    /* Additional button styling */
 }

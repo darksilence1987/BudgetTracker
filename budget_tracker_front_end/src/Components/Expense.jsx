@@ -1,22 +1,36 @@
-import './Expense.css'
-import React from 'react'
+import './Expense.css';
+import React, { useState } from 'react';
+import { PencilSquare, Trash } from 'react-bootstrap-icons';
 
-export default function Expense(props) {
+export default function Expense({ title, category, amount, color, onEdit, onDelete }) {
+    const [isShrunk, setIsShrunk] = useState(false);
+
+    const toggleShrink = () => {
+        setIsShrunk(!isShrunk);
+    };
+
     return (
-        <div className="outer">
-            <div className="expense" style={{ borderColor: props.color }}>
+        <div className="outer" onClick={toggleShrink}>
+            <div className={`expense ${isShrunk ? 'shrunk' : ''}`} style={{ borderColor: color }}>
                 <div className="left-box">
                     <div className="expense-title">
-                        <p>{props.title}</p>
+                        <p>{title}</p>
                     </div>
                     <div className="expense-category">
-                        <p>{props.category}</p>
+                        <p>{category}</p>
                     </div>
                 </div>
                 <div className="expense-amount">
-                    <p>{props.amount}</p>
+                    <p>{amount}</p>
                 </div>
             </div>
+
+            {isShrunk && (
+                <div className="expense-buttons">
+                    <button onClick={onEdit}><PencilSquare /></button>
+                    <button onClick={onDelete}><Trash /></button>
+                </div>
+            )}
         </div>
-    )
+    );
 }

@@ -54,4 +54,27 @@ public class ExpensesController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @RequestBody ExpenseDTO expenseDTO) {
+        return expenseRepository.findById(id)
+                .map(existingExpense -> {
+                    existingExpense.setTitle(expenseDTO.getTitle());
+                    existingExpense.setCategory(expenseDTO.getCategory());
+                    existingExpense.setAmount(expenseDTO.getAmount());
+                    existingExpense.setDate(expenseDTO.getDate());
+                    Expense updatedExpense = expenseRepository.save(existingExpense);
+                    return ResponseEntity.ok(updatedExpense);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteExpense(@PathVariable Long id) {
+        return expenseRepository.findById(id)
+                .map(expense -> {
+                    expenseRepository.delete(expense);
+                    return ResponseEntity.ok().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

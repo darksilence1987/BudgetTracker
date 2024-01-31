@@ -29,7 +29,7 @@ const sumExpensesByCategory = (allExpenses) => {
 export default function BudgetTracker() {
     const [monthlyExpenses, setMonthlyExpenses] = useState({});
     const [showForm, setShowForm] = useState(false);
-
+    const [editingExpense, setEditingExpense] = useState(null);
 
 
 
@@ -53,27 +53,46 @@ export default function BudgetTracker() {
     const handleCancel = () => {
         setShowForm(false);
     };
+    const handleEditExpense = (expense) => {
+        setEditingExpense(expense);
+        setShowForm(true);
+    };
 
     const handleSaveExpense = async (expense) => {
+        const endpoint = expense.id ? `http://localhost:8080/api/expenses/${editingExpense.id}` : 'http://localhost:8080/api/expenses';
+        const method = expense.id ? axios.put : axios.post;
+
         try {
-            await axios.post('http://localhost:8080/api/expenses', expense);
-            // Fetch the updated expenses data
+            await method(endpoint, expense);
             await fetchExpenses();
-            setShowForm(false); // Hide the form after saving and fetching updated data
+            setShowForm(false);
+            setEditingExpense(null); // Reset editing state
         } catch (error) {
-            console.error("Error posting expense:", error);
+            console.error("Error saving expense:", error);
         }
     };
 
+    const handleDeleteExpense = async (expenseId) => {
+        try {
+            await axios.delete(`http://localhost:8080/api/expenses/${expenseId}`);
+            await fetchExpenses();
+        } catch (error) {
+            console.error("Error deleting expense:", error);
+        }
+    };
     if (showForm) {
         return (
             <div className="budget-tracker">
                 <TopBarWithoutButton/>
-                <AddExpenseForm categories={categories} onSaveExpense={handleSaveExpense} onCancel={handleCancel}/>
+                <AddExpenseForm
+                    categories={categories}
+                    onSaveExpense={handleSaveExpense}
+                    onCancel={() => setShowForm(false)}
+                    editingExpense={editingExpense}
+                />
             </div>
         );
     }
-
 
     // Flatten expenses from all years and months into one array and sort by date
     const allExpensesSorted = Object.entries(monthlyExpenses).flatMap(([year, months]) =>
@@ -106,7 +125,7 @@ export default function BudgetTracker() {
 
     return (
         <div className="budget-tracker">
-            <TopBar onAddClick={handleAddClick} />
+            <TopBar onAddClick={() => setEditingExpense(null)} />
             <div className="chart">
                 <DoughnutChart data={chartData} />
             </div>
@@ -121,7 +140,9 @@ export default function BudgetTracker() {
                             title={expense.title}
                             category={expense.category}
                             amount={`$${expense.amount}`}
-                            color={categories[expense.category]}
+                            color={expense.color}
+                            onEdit={() => handleEditExpense(expense)}
+                            onDelete={() => handleDeleteExpense(expense.id)}
                         />
                     </React.Fragment>
                 ))
