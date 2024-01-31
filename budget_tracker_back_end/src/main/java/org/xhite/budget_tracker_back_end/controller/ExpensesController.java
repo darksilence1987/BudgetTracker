@@ -9,8 +9,6 @@ import org.xhite.budget_tracker_back_end.entities.Expense;
 import org.xhite.budget_tracker_back_end.repository.ExpenseRepository;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
