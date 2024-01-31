@@ -1,0 +1,13 @@
+.form-class{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.form-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.form-input{
+    display: flex;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,30 @@
+.topbar{
+    background-color: aliceblue;
+    color: #282c34;
+    height: 100px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.title{
+    display: flex;
+    flex-grow: 10;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.add-button{
+    flex-grow: 2;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+}
+.add-button :hover{
+    cursor: pointer;
+    color: aliceblue;
+    background-color: darkgray;
+    border-radius: 20px;
+}

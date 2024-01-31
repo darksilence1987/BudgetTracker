@@ -1,0 +1,33 @@
+.outer{
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 2px;
+    margin: 5px;
+}
+.expense{
+    display: flex;
+    justify-content: space-between;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 3px;
+    color: black;
+    font-size: small;
+    border: 3px solid #888c94;
+}
+.left-box{
+    flex-grow: 8;
+}
+.expense-title{
+    text-align: left;
+    font-size: medium;
+    align-self: center;
+}
+.expense-amount{
+    align-self: center;
+    text-align: right;
+    flex-grow: 4;
+    font-size: medium;
+}
+.expense-category{
+    text-align: left;
+}
